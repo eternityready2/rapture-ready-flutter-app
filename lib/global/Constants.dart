@@ -1,1 +1,1 @@
-const String BACKEND_URL = "https://777.vertizontalmedia.com/";
+const String BACKEND_URL = "https://app.eternityready.com/";
