@@ -13,38 +13,38 @@
       "sections": [
         {
           "id": "section1",
-          "title": "VertiZontal Media",
+          "title": "Browse Rapture Ready",
           "buttons": [
             {
               "id": "btn1-1",
               "icon": "/images/repture_ready.png",
-              "text": "VertiZontal Media",
+              "text": "Rapture Ready",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com/",
+              "link": "https://www.raptureready.com/",
               "_id": "6869b03c629f7f94da9d9092"
             },
             {
               "id": "btn1-2",
               "icon": "/images/rapture_index.png",
-              "text": "Rapture ",
+              "text": "Rapture Index",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com//article.php?c=rapture&page=1",
+              "link": "https://www.raptureready.com/rapture-ready-index/",
               "_id": "6869b03c629f7f94da9d9093"
             },
             {
               "id": "btn1-3",
               "icon": "/images/rr_news.png",
-              "text": "Articles",
+              "text": "Rapture Ready News",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com//article.php",
+              "link": "https://www.raptureready.com/category/rapture-ready-news",
               "_id": "6869b03c629f7f94da9d9094"
             },
             {
               "id": "btn1-4",
               "icon": "/images/repture_ready_tv.png",
-              "text": "Video Series",
+              "text": "Rapture Ready TV",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com//series.php",
+              "link": "https://www.raptureready.tv",
               "_id": "6869b03c629f7f94da9d9095"
             },
             {
@@ -60,31 +60,31 @@
               "icon": "/images/nearing_midnight.png",
               "text": "Nearing Midnight",
               "color": "#0066ff",
-              "link": "https://adventofmessiah.wordpress.com/2013/02/08/the-70th-week-the-rapture-of-the-elect/",
+              "link": "https://www.raptureready.com/category/nearing-midnight/",
               "_id": "6869b03c629f7f94da9d9097"
             },
             {
               "id": "btn1-7",
               "icon": "/images/israel_watch.png",
-              "text": "VertiZontal Store",
+              "text": "Israel Watch",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com//page.php?p=5",
+              "link": "https://www.raptureready.com/category/israel-watch/",
               "_id": "6869b03c629f7f94da9d9098"
             },
             {
               "id": "btn1-8",
               "icon": "/images/prayer_center.png",
-              "text": "Need Prayer?",
+              "text": "Prayer Center",
               "color": "#0066ff",
-              "link": "https://share.google/XEqiWO404h1UPB6fl",
+              "link": "https://www.raptureready.com/prayercenter/",
               "_id": "6869b03c629f7f94da9d9099"
             },
             {
               "id": "btn1-9",
               "icon": "/images/rr_forms.png",
-              "text": "Projects",
+              "text": "RR Forms",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com//page.php?p=6",
+              "link": "https://www.raptureforums.com/forums/",
               "_id": "6869b03c629f7f94da9d909a"
             }
           ],
@@ -93,12 +93,12 @@
         },
         {
           "id": "section2",
-          "title": "Media, Music & Radio ",
+          "title": "Eternity Ready Media",
           "buttons": [
             {
               "id": "btn2-1",
               "icon": "/images/watch_tv.png",
-              "text": "TV & Movies",
+              "text": "Watch TV",
               "color": "#0066ff",
               "link": "https://eternityready.com/mobile-site/tv/",
               "_id": "6869b03c629f7f94da9d909f"
@@ -114,17 +114,17 @@
             {
               "id": "btn2-3",
               "icon": "/images/radio.png",
-              "text": "VertiZontal Radio",
+              "text": "Radio",
               "color": "#0066ff",
-              "link": "https://vertizontalradio.com/",
+              "link": "https://listen.eternityready.com/",
               "_id": "6869b03c629f7f94da9d90a1"
             },
             {
               "id": "btn2-4",
               "icon": "/images/on_demand.png",
-              "text": "Radio Stations",
+              "text": "On Demand",
               "color": "#0066ff",
-              "link": "https://www.eternityready.com/radio/",
+              "link": "https://www.eternityready.com",
               "_id": "6869b03c629f7f94da9d90a2"
             },
             {
@@ -140,7 +140,7 @@
               "icon": "/images/music_videos.png",
               "text": "Music Videos",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com//category.php",
+              "link": "https://www.vertizontalmedia.com",
               "_id": "6869b03c629f7f94da9d90a4"
             }
           ],
@@ -154,9 +154,9 @@
             {
               "id": "btn3-1",
               "icon": "/images/contact.png",
-              "text": "Contact US",
+              "text": "Help",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com/contact.php",
+              "link": "https://www.eternityready.com/mobile-site/help",
               "_id": "6869b03c629f7f94da9d90a6"
             },
             {
@@ -164,7 +164,7 @@
               "icon": "/images/donate.png",
               "text": "Donate",
               "color": "#0066ff",
-              "link": "https://www.vertizontalmedia.com/page.php?p=4",
+              "link": "https://donorbox.org/eternity-ready-radio/",
               "_id": "6869b03c629f7f94da9d90a7"
             },
             {
@@ -184,18 +184,18 @@
     {
       "id": "nav-2",
       "icon": "/images/repture_ready.png",
-      "text": "Salvation",
+      "text": "Rapture R",
       "color": "#0066ff",
-      "link": "https://www.vertizontalmedia.com/salvation/",
+      "link": "https://www.raptureready.com/",
       "active": false,
       "_id": "6869b03c629f7f94da9d90aa"
     },
     {
       "id": "nav-3",
       "icon": "/images/watch_tv.png",
-      "text": "Media",
+      "text": "TV",
       "color": "#0066ff",
-      "link": "https://www.vertizontalmedia.com",
+      "link": "https://eternityready.tv/live-tv",
       "active": false,
       "_id": "6869b03c629f7f94da9d90ab"
     },
@@ -204,7 +204,7 @@
       "icon": "/images/radio.png",
       "text": "Radio",
       "color": "#0066ff",
-      "link": "https://vertizontalradio.com/",
+      "link": "https://listen.eternityready.com/",
       "active": false,
       "_id": "6869b03c629f7f94da9d90ac"
     },
@@ -220,32 +220,31 @@
           "id": "more-1",
           "icon": "/images/videocam.png",
           "text": "Home",
-          "link": "https://www.vertizontalmedia.com",
-          "_id": "688aaa72dcc40c5dff765a29"
+          "link": "https://www.raptureready.tv",
+          "_id": "6869b03c629f7f94da9d90ad"
         },
         {
           "id": "more-2",
           "icon": "/images/attach_money.png",
-          "text": "Donate",
-          "link": "https://donorbox.org/vertizontal-resource",
-          "_id": "687f234cb5d49d19bb4e3797"
+          "text": "Rapture R",
+          "link": "https://donorbox.org/eternity-ready-radio",
+          "_id": "6869b03c629f7f94da9d90ae"
         },
         {
           "icon": "/images/share.png",
           "text": "Share",
           "color": "#0066ff",
           "link": "ACTION_SEND",
-          "android": "Download Vertizontal Media at: https://play.google.com/store/apps/details?id=com.wVertiZontalMedia",
-          "ios": "Download VertiZontal Media at: https://apps.apple.com/us/app/vertizontal-media-app/id6749469616"
+          "android": "Download Rapture Ready / Eternity Ready at: https://play.google.com/store/apps/details?id=com.wRaptureReadyEndTimesNewsProphecyDoctrineofPreTribRapture",
+          "ios": "Download Rapture Ready / Eternity Ready at: https://apps.apple.com/us/app/rapture-ready/id6504677632"
         },
         {
           "icon": "/images/grade.png",
           "text": "Rate",
           "color": "#0066ff",
           "link": "ACTION_VIEW",
-          "android": "https://play.google.com/store/apps/details?id=com.wVertiZontalMedia",
-          "ios": "https://apps.apple.com/us/app/vertizontal-media-app/id6749469616"
-        },
+          "android": "https://play.google.com/store/apps/details?id=com.wRaptureReadyEndTimesNewsProphecyDoctrineofPreTribRapture",
+          "ios": "https://apps.apple.com/us/app/rapture-ready/id6504677632"        },
         {
           "icon": "/images/info.png",
           "text": "About",
