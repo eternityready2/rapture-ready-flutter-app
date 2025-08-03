@@ -1,28 +1,28 @@
 <div align="center">
 
-<img width="200" src="assets/icon/icon.png" alt="VertiZontal Media" align="center">
+<img width="200" src="assets/icon/icon.png" alt="Rapture Ready / Eternity Ready" align="center">
 
-# VertiZontal Media
+# Rapture Ready / Eternity Ready 
 
-VertiZontal Media is a music media platform. We provide some of the best in Christian Music from the past and today. Listen to artists like Brook Fraser, Paul Clark, Danny Gokey, Chris Tomlin and much more.
+Rapture Ready / Eternity Ready is the largest source for Bible Prophecy / End-Time / Rapture Web Site on the Internet. We offer the latest on News and Bible Prophecy all related to the End Times and the Rapture. We are the # 1 source related to the Signs of the Times, End-Times and the Rapture of the Church.
 
-<a href="https://github.com/vmedia7/vertizontal-media-flutter-app/releases/latest">
-      <img alt="Latest release" src="https://img.shields.io/github/v/release/vmedia7/vertizontal-media-flutter-app.svg?logo=github&style=for-the-badge">
+<a href="https://github.com/eternityready2/rapture-ready-flutter-app/releases/latest">
+      <img alt="Latest release" src="https://img.shields.io/github/v/release/eternityready2/rapture-ready-flutter-app.svg?logo=github&style=for-the-badge">
 </a>
-<a href="https://github.com/vmedia7/vertizontal-media-flutter-app/releases">
-      <img alt="Releases" src="https://img.shields.io/github/downloads/vmedia7/vertizontal-media-flutter-app/total?color=blue&label=downloads&style=for-the-badge">
+<a href="https://github.com/eternityready2/rapture-ready-flutter-app/releases">
+      <img alt="Releases" src="https://img.shields.io/github/downloads/eternityready2/rapture-ready-flutter-app/total?color=blue&label=downloads&style=for-the-badge">
 </a>
 
 <br>
 
 <div>
-<a href="https://play.google.com/store/apps/details?id=com.wVertiZontalMedia">
+<a href="https://play.google.com/store/apps/details?id=com.wRaptureReadyEndTimesNewsProphecyDoctrineofPreTribRapture">
     <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="100">
 </a>
 </div>
 
 <div>
-<a href="https://apps.apple.com/us/app/vertizontal-media-app/id6749469616">
+<a href="https://apps.apple.com/us/app/rapture-ready/id6504677632">
     <img alt="Download on the App Store" src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred_2x.png" height="75">
 </a>
 </div>
@@ -51,6 +51,6 @@ VertiZontal Media is a music media platform. We provide some of the best in Chri
 
 ## :hammer: Contributors
 
-<a href="https://github.com/vmedia7/vertizontal-media-flutter-app/graphs/contributors">
-  <img alt="List of contributors to this repository" src="https://contrib.rocks/image?repo=vmedia7/vertizontal-media-flutter-app" />
+<a href="https://github.com/eternityready2/rapture-ready-flutter-app/graphs/contributors">
+  <img alt="List of contributors to this repository" src="https://contrib.rocks/image?repo=eternityready2/rapture-ready-flutter-app" />
 </a>
