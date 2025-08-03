@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCE69uTzU6Xm6ZnCUEUFAb5CJ9HHriou1M</string>
+	<string>AIzaSyApd_PZlTx5Vmw1fwTmL-F4uSshuXjdJlg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>195650355363</string>
+	<string>397286143608</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.wVertiZontalMediaApp</string>
+	<string>com.jeremyfarris.raptureready</string>
 	<key>PROJECT_ID</key>
-	<string>vertizontal-media</string>
+	<string>rapture-ready-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vertizontal-media.firebasestorage.app</string>
+	<string>rapture-ready-app.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:195650355363:ios:4eb8ee7e3e088515b83f16</string>
+	<string>1:397286143608:ios:58c62e2c0c7da9e4bb1f8d</string>
 </dict>
 </plist>

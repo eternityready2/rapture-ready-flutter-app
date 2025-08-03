@@ -41,49 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAppTTVqh6DBBYcUaivq4o8dwZ7E0IsRWQ',
-    appId: '1:195650355363:web:0c52d182513fb50ab83f16',
-    messagingSenderId: '195650355363',
-    projectId: 'vertizontal-media',
-    authDomain: 'vertizontal-media.firebaseapp.com',
-    storageBucket: 'vertizontal-media.firebasestorage.app',
-    measurementId: 'G-1N8R9JZTTW',
+    apiKey: 'AIzaSyDR8kYXMlMhzgOP0kvyGuajZ8S5GC9zm3I',
+    appId: '1:397286143608:web:dcc640b1b9dd1c12bb1f8d',
+    messagingSenderId: '397286143608',
+    projectId: 'rapture-ready-app',
+    authDomain: 'rapture-ready-app.firebaseapp.com',
+    storageBucket: 'rapture-ready-app.firebasestorage.app',
+    measurementId: 'G-7RPH8DDMV8',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAOpNjMzGlw80fxO2Ygl6oM5UsfSurR7zI',
-    appId: '1:195650355363:android:5aacc858e9341115b83f16',
-    messagingSenderId: '195650355363',
-    projectId: 'vertizontal-media',
-    storageBucket: 'vertizontal-media.firebasestorage.app',
+    apiKey: 'AIzaSyAtQxivpL8_KRXusinb72rLxN1nTeueZKk',
+    appId: '1:397286143608:android:52ca53fda1cb05f4bb1f8d',
+    messagingSenderId: '397286143608',
+    projectId: 'rapture-ready-app',
+    storageBucket: 'rapture-ready-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCE69uTzU6Xm6ZnCUEUFAb5CJ9HHriou1M',
-    appId: '1:195650355363:ios:4eb8ee7e3e088515b83f16',
-    messagingSenderId: '195650355363',
-    projectId: 'vertizontal-media',
-    storageBucket: 'vertizontal-media.firebasestorage.app',
-    iosBundleId: 'com.wVertiZontalMediaApp',
+    apiKey: 'AIzaSyApd_PZlTx5Vmw1fwTmL-F4uSshuXjdJlg',
+    appId: '1:397286143608:ios:58c62e2c0c7da9e4bb1f8d',
+    messagingSenderId: '397286143608',
+    projectId: 'rapture-ready-app',
+    storageBucket: 'rapture-ready-app.firebasestorage.app',
+    iosBundleId: 'com.jeremyfarris.raptureready',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCE69uTzU6Xm6ZnCUEUFAb5CJ9HHriou1M',
-    appId: '1:195650355363:ios:baceaf695cba1794b83f16',
-    messagingSenderId: '195650355363',
-    projectId: 'vertizontal-media',
-    storageBucket: 'vertizontal-media.firebasestorage.app',
+    apiKey: 'AIzaSyApd_PZlTx5Vmw1fwTmL-F4uSshuXjdJlg',
+    appId: '1:397286143608:ios:e5c7f488c5d8550fbb1f8d',
+    messagingSenderId: '397286143608',
+    projectId: 'rapture-ready-app',
+    storageBucket: 'rapture-ready-app.firebasestorage.app',
     iosBundleId: 'com.wVertiZontalMedia',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAppTTVqh6DBBYcUaivq4o8dwZ7E0IsRWQ',
-    appId: '1:195650355363:web:4761ba49d9133a9bb83f16',
-    messagingSenderId: '195650355363',
-    projectId: 'vertizontal-media',
-    authDomain: 'vertizontal-media.firebaseapp.com',
-    storageBucket: 'vertizontal-media.firebasestorage.app',
-    measurementId: 'G-9RVGD140SD',
+    apiKey: 'AIzaSyDR8kYXMlMhzgOP0kvyGuajZ8S5GC9zm3I',
+    appId: '1:397286143608:web:0d118dc76975ae70bb1f8d',
+    messagingSenderId: '397286143608',
+    projectId: 'rapture-ready-app',
+    authDomain: 'rapture-ready-app.firebaseapp.com',
+    storageBucket: 'rapture-ready-app.firebasestorage.app',
+    measurementId: 'G-FX4Q3Q6WCZ',
   );
 
 }

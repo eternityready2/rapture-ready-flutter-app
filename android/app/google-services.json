@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "195650355363",
-    "project_id": "vertizontal-media",
-    "storage_bucket": "vertizontal-media.firebasestorage.app"
+    "project_number": "397286143608",
+    "project_id": "rapture-ready-app",
+    "storage_bucket": "rapture-ready-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:195650355363:android:5aacc858e9341115b83f16",
+        "mobilesdk_app_id": "1:397286143608:android:52ca53fda1cb05f4bb1f8d",
         "android_client_info": {
-          "package_name": "com.wVertiZontalMedia"
+          "package_name": "com.wRaptureReadyEndTimesNewsProphecyDoctrineofPreTribRapture"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAOpNjMzGlw80fxO2Ygl6oM5UsfSurR7zI"
+          "current_key": "AIzaSyAtQxivpL8_KRXusinb72rLxN1nTeueZKk"
         }
       ],
       "services": {
