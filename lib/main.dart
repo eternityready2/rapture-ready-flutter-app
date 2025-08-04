@@ -33,9 +33,13 @@ import 'tabs/MoreScreen.dart';
 
 import 'firebase_options.dart';
 
+
 void main() async {
+
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  final DateTime splashStartTime = DateTime.now();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -48,12 +52,13 @@ void main() async {
   runApp(AppStateWidget(
     appLayout: {},
     loaded: null,
-    child: const MyApp(),
+    child: MyApp(splashStartTime: splashStartTime),
   ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final DateTime splashStartTime;
+  const MyApp({Key? key, required this.splashStartTime}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -73,11 +78,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       loaded = "assets";
     }
 
-    AppStateWidget.of(context).setAppState(localLayout, loaded);
-    FlutterNativeSplash.remove();
+    final DateTime splashEndTime = DateTime.now();
+    final elapsed = splashEndTime.difference(
+      this.widget.splashStartTime
+    ).inSeconds;
 
-    
-    // Do background network work, update afterwards
+    final int timeToWait = 3;
+
+    print("Loading Layout took: ${elapsed} seconds");
+    AppStateWidget.of(context).setAppState(localLayout, loaded);
+    loadNetworkAndUpdate(localLayout);
+
+    if (elapsed >= timeToWait) {
+      FlutterNativeSplash.remove();
+    } else {
+      await Future.delayed(Duration(seconds: timeToWait - elapsed), () async {
+        FlutterNativeSplash.remove();
+      });
+    }
+  }
+
+  Future<void> loadNetworkAndUpdate(Map<String, dynamic> localLayout) async {
     final networkLayout = await loadAppLayoutFromNetwork();
     final firstTab = localLayout['tabs'][0];
     for (int idx = 0; idx < networkLayout['data']['sections'].length; idx++) {
@@ -96,7 +117,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           tab['text']!.toLowerCase() == "more"
           ) tab
     ];
-    print(localLayout['tabs']);
 
     var insertAt = 0;
     for (int idx = 0; idx < networkLayout['data']['bottomNav'].length; idx++) {
@@ -125,7 +145,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     AppStateWidget.of(context).setAppState(localLayout, "network");
     await AppLayoutCache().writeJsonToCache(localLayout);
   }
-
 
   @override
   void initState() {
