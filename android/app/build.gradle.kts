@@ -18,7 +18,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.wVertiZontalMedia"
+    namespace = "com.wRaptureReadyEndTimesNewsProphecyDoctrineofPreTribRapture"
     compileSdk = 35
     ndkVersion = "27.0.12077973"
 
