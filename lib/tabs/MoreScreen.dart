@@ -169,7 +169,7 @@ class _MoreScreenState extends State<MoreScreen> {
             ),
             const SizedBox(height: 6),
             Image.asset(
-              'assets/icon/icon.png',
+              'assets/icon/splash.png',
               width: 128,
               height: 128,
             ),
