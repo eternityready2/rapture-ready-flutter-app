@@ -65,6 +65,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  bool _showSecondSplashScreen = true;
   Future<void> _initAsync() async {
     
     Map<String, dynamic> localLayout;
@@ -83,7 +84,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       this.widget.splashStartTime
     ).inSeconds;
 
-    final int timeToWait = 2;
+    final int timeToWait = 1;
 
     print("Loading Layout took: ${elapsed} seconds");
     AppStateWidget.of(context).setAppState(localLayout, loaded);
@@ -200,9 +201,34 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final AppState appState = AppStateScope.of(context);
+
     if (appState.loaded == null) {
-      return Center(child: CircularProgressIndicator());
+      return SecondSplashScreen();
     }
+
+    if (_showSecondSplashScreen) {
+      final DateTime splashEndTime = DateTime.now();
+
+      final elapsed = splashEndTime.difference(
+        this.widget.splashStartTime
+      ).inSeconds;
+
+      final int timeToWait = 2;
+
+      if (elapsed >= timeToWait) {
+        setState(() {
+          _showSecondSplashScreen = false;
+        });
+      } else {
+        Future.delayed(Duration(seconds: timeToWait - elapsed), () async {
+          setState(() {
+            _showSecondSplashScreen = false;
+          });
+        });
+      }
+      return SecondSplashScreen();
+    }
+
     _showAppReview();
     print(appState.loaded);
 
@@ -333,3 +359,31 @@ class _AppNavigationState extends State<AppNavigation> {
     );
   }
 }
+
+class SecondSplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: Colors.black,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          double size = constraints.maxWidth < constraints.maxHeight
+              ? constraints.maxWidth
+              : constraints.maxHeight;
+
+          double imageSize = size * 0.5;
+
+          return Center(
+            child: Image.asset(
+              'assets/icon/splash2.png',
+              width: imageSize,
+              height: imageSize,
+              fit: BoxFit.contain,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
