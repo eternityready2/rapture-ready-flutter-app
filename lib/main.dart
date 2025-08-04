@@ -371,7 +371,7 @@ class SecondSplashScreen extends StatelessWidget {
               ? constraints.maxWidth
               : constraints.maxHeight;
 
-          double imageSize = size * 0.5;
+          double imageSize = size * 0.75;
 
           return Center(
             child: Image.asset(
