@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       this.widget.splashStartTime
     ).inSeconds;
 
-    final int timeToWait = 3;
+    final int timeToWait = 2;
 
     print("Loading Layout took: ${elapsed} seconds");
     AppStateWidget.of(context).setAppState(localLayout, loaded);
