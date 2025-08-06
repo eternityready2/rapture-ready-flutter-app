@@ -12,7 +12,8 @@ import '../utils/AppImage.dart';
 import '../global/AppState.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final void Function(dynamic)? onWebViewCreated;
+  const HomeScreen({super.key, this.onWebViewCreated});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     else {
-      return WebView(url: _url!, customLastGoBack: customLastGoBack);
+      return WebView(url: _url!, customLastGoBack: customLastGoBack, onWebViewCreated: this.widget.onWebViewCreated);
     }
   }
 

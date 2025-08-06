@@ -257,6 +257,7 @@ class AppNavigation extends StatefulWidget {
 class _AppNavigationState extends State<AppNavigation> {
   int currentPageIndex = 0;
   int _rebuildFlag = 0;
+  InAppWebViewController? _webViewController;
 
   @override
   Widget build(BuildContext context) {
@@ -291,6 +292,9 @@ class _AppNavigationState extends State<AppNavigation> {
               {
                 customLastGoBack.call();
                 webViewControllers.removeLast();
+                setState(() {
+                  _webViewController = null;
+                });
                 return;
               }
             } catch (e) {
@@ -307,11 +311,42 @@ class _AppNavigationState extends State<AppNavigation> {
         title: Text(appLayout['tabs'][currentPageIndex]['text']! as String),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
+
+        actions: _webViewController != null ? [
+          IconButton(
+            tooltip: "Zoom Out",
+            icon: Icon(Icons.zoom_out),
+            onPressed: () async {
+              bool zoomOut = await _webViewController!.zoomOut();
+              print('ZoomOut ${zoomOut}');
+            }
+             
+          ),
+          IconButton(
+            tooltip: "Reset Zoom",
+            icon: Icon(Icons.zoom_out_map),
+            onPressed: () async {
+              print('Reset Zoom');
+              while (await _webViewController!.zoomOut()) {
+              }
+            }
+          ),
+          IconButton(
+            tooltip: "Zoom In",
+            icon: Icon(Icons.zoom_in),
+            onPressed: () async {
+              bool zoomIn = await _webViewController!.zoomIn();
+              print('ZoomIn ${zoomIn}');
+
+            }
+          ),
+        ] : [],
       ),
 
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
+            _webViewController = null;
             if (index == currentPageIndex) {
               _rebuildFlag++;
             } else {
@@ -347,11 +382,35 @@ class _AppNavigationState extends State<AppNavigation> {
             return WebView(
               key: ValueKey('$link-$_rebuildFlag'),
               url: link,
+              onWebViewCreated: (controller) {
+                print('onWebViewCreated');
+                setState(() {
+                  _webViewController = controller;
+                });
+              },
             );
           } else if (link == "#") {
-            return HomeScreen(key: ValueKey('home-$_rebuildFlag'));
+            return HomeScreen(
+              key: ValueKey('home-$_rebuildFlag'),
+              onWebViewCreated: (controller) {
+                print('onWebViewCreated');
+                setState(() {
+                  _webViewController = controller;
+                });
+              },
+
+            );
           } else if (link == "more") {
-            return MoreScreen(key: ValueKey('more-$_rebuildFlag'));
+            return MoreScreen(
+              key: ValueKey('more-$_rebuildFlag'),
+              onWebViewCreated: (controller) {
+                print('onWebViewCreated');
+                setState(() {
+                  _webViewController = controller;
+                });
+              },
+
+            );
           }
           return SizedBox();
         })(),

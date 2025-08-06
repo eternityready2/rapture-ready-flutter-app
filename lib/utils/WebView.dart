@@ -17,7 +17,14 @@ class WebView extends StatefulWidget {
   /// SystemNavigator.pop().
   final void Function()? customLastGoBack;
 
-  const WebView({super.key, required this.url, this.customLastGoBack});
+  final ValueChanged<InAppWebViewController>? onWebViewCreated;
+
+  const WebView({
+    super.key,
+    required this.url,
+    this.customLastGoBack,
+    this.onWebViewCreated,
+  });
 
   @override
   State<WebView> createState() => _WebViewState();
@@ -124,6 +131,10 @@ class _WebViewState extends State<WebView> with WidgetsBindingObserver {
           */
           onWebViewCreated: (ctrl) {
             controller = ctrl;
+            if (widget.onWebViewCreated != null) {
+              widget.onWebViewCreated!(controller);
+            }
+
             webViewControllers.add(GlobalWebViewController(
               controller: controller,
               customLastGoBack: this.widget.customLastGoBack,

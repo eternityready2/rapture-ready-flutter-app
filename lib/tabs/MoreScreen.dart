@@ -18,7 +18,8 @@ import '../services/CacheService.dart';
 import '../global/AppState.dart';
 
 class MoreScreen extends StatefulWidget {
-  const MoreScreen({super.key});
+  final void Function(dynamic)? onWebViewCreated;
+  const MoreScreen({super.key, this.onWebViewCreated});
 
   @override
   State<MoreScreen> createState() => _MoreScreenState();
@@ -233,7 +234,8 @@ class _MoreScreenState extends State<MoreScreen> {
       return WebView(
         url: _url!,
         customLastGoBack: customLastGoBack,
-        key: ValueKey(_url)
+        key: ValueKey(_url),
+        onWebViewCreated: this.widget.onWebViewCreated,
       );
     }
 
