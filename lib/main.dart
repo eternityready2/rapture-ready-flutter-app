@@ -315,16 +315,21 @@ class _AppNavigationState extends State<AppNavigation> {
         actions: _webViewController != null ? [
           IconButton(
             tooltip: "Zoom Out",
-            icon: Icon(Icons.zoom_out),
+            icon: Icon(
+              Icons.zoom_out,
+              semanticLabel: "Zoom out"
+            ),
             onPressed: () async {
               bool zoomOut = await _webViewController!.zoomOut();
               print('ZoomOut ${zoomOut}');
             }
-             
           ),
           IconButton(
             tooltip: "Reset Zoom",
-            icon: Icon(Icons.zoom_out_map),
+            icon: Icon(
+              Icons.zoom_out_map,
+              semanticLabel: "Reset zoom"
+            ),
             onPressed: () async {
               print('Reset Zoom');
               while (await _webViewController!.zoomOut()) {
@@ -333,7 +338,10 @@ class _AppNavigationState extends State<AppNavigation> {
           ),
           IconButton(
             tooltip: "Zoom In",
-            icon: Icon(Icons.zoom_in),
+            icon: Icon(
+              Icons.zoom_in,
+              semanticLabel: "Zoom in"
+            ),
             onPressed: () async {
               bool zoomIn = await _webViewController!.zoomIn();
               print('ZoomIn ${zoomIn}');
