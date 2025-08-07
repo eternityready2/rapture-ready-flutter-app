@@ -258,6 +258,44 @@ class _AppNavigationState extends State<AppNavigation> {
   int currentPageIndex = 0;
   int _rebuildFlag = 0;
   InAppWebViewController? _webViewController;
+  TransformationController _interactiveViewerController = TransformationController();
+
+  @override
+  void dispose() {
+    _interactiveViewerController.dispose();
+    super.dispose();
+  }
+
+  void _zoomInInteractiveViewer() {
+    final matrix = _interactiveViewerController.value;
+    final zoom = matrix.getMaxScaleOnAxis();
+    if (zoom < 4.0) { // max zoom limit
+      _interactiveViewerController.value = matrix.scaled(1.2);
+    }
+  }
+
+  void _zoomOutInteractiveViewer() {
+    final matrix = _interactiveViewerController.value;
+    final currentScale = matrix.getMaxScaleOnAxis();
+    final minScale = 1.0; // initial/reset scale
+    final zoomFactor = 1 / 1.2; // zoom out factor
+
+    if (currentScale <= minScale) {
+      // Already at or below the min scale, reset exactly to identity matrix
+      _interactiveViewerController.value = Matrix4.identity();
+    } else {
+      final newScale = currentScale * zoomFactor;
+      if (newScale < minScale) {
+        _interactiveViewerController.value = Matrix4.identity();
+      } else {
+        _interactiveViewerController.value = matrix.scaled(zoomFactor);
+      }
+    }
+  }
+
+  void _resetZoomInteractiveViewer() {
+    _interactiveViewerController.value = Matrix4.identity();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -312,7 +350,7 @@ class _AppNavigationState extends State<AppNavigation> {
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
 
-        actions: _webViewController != null ? [
+        actions:[
           IconButton(
             tooltip: "Zoom Out",
             icon: Icon(
@@ -320,8 +358,12 @@ class _AppNavigationState extends State<AppNavigation> {
               semanticLabel: "Zoom out"
             ),
             onPressed: () async {
-              bool zoomOut = await _webViewController!.zoomOut();
-              print('ZoomOut ${zoomOut}');
+              if (_webViewController != null) {
+                bool zoomOut = await _webViewController!.zoomOut();
+                print('ZoomOut ${zoomOut}');
+              } else {
+                _zoomOutInteractiveViewer();
+              }
             }
           ),
           IconButton(
@@ -331,8 +373,11 @@ class _AppNavigationState extends State<AppNavigation> {
               semanticLabel: "Reset zoom"
             ),
             onPressed: () async {
-              print('Reset Zoom');
-              while (await _webViewController!.zoomOut()) {
+              if (_webViewController != null) {
+                print('Reset Zoom webview not yet implemented');
+                // WebView does not provide zoom reset directly, so optional to reload or ignore
+              } else {
+                _resetZoomInteractiveViewer();
               }
             }
           ),
@@ -343,12 +388,15 @@ class _AppNavigationState extends State<AppNavigation> {
               semanticLabel: "Zoom in"
             ),
             onPressed: () async {
-              bool zoomIn = await _webViewController!.zoomIn();
-              print('ZoomIn ${zoomIn}');
-
+              if (_webViewController != null) {
+                bool zoomIn = await _webViewController!.zoomIn();
+                print('ZoomIn ${zoomIn}');
+              } else {
+                _zoomInInteractiveViewer();
+              }
             }
           ),
-        ] : [],
+        ]
       ),
 
       bottomNavigationBar: NavigationBar(
@@ -384,44 +432,52 @@ class _AppNavigationState extends State<AppNavigation> {
             ),
         ],
       ),
-        body: (() {
-          final String link = appLayout['tabs'][currentPageIndex]['link']!;
-          if (link.startsWith('http')) {
-            return WebView(
-              key: ValueKey('$link-$_rebuildFlag'),
-              url: link,
-              onWebViewCreated: (controller) {
-                print('onWebViewCreated');
-                setState(() {
-                  _webViewController = controller;
-                });
-              },
-            );
-          } else if (link == "#") {
-            return HomeScreen(
-              key: ValueKey('home-$_rebuildFlag'),
-              onWebViewCreated: (controller) {
-                print('onWebViewCreated');
-                setState(() {
-                  _webViewController = controller;
-                });
-              },
-
-            );
-          } else if (link == "more") {
-            return MoreScreen(
-              key: ValueKey('more-$_rebuildFlag'),
-              onWebViewCreated: (controller) {
-                print('onWebViewCreated');
-                setState(() {
-                  _webViewController = controller;
-                });
-              },
-
-            );
-          }
-          return SizedBox();
-        })(),
+      body: (() {
+    final String link = appLayout['tabs'][currentPageIndex]['link']!;
+    if (link.startsWith('http')) {
+      return WebView(
+        key: ValueKey('$link-$_rebuildFlag'),
+        url: link,
+        onWebViewCreated: (controller) {
+          print('onWebViewCreated');
+          setState(() {
+            _webViewController = controller;
+          });
+        },
+      );
+    } else if (link == "#") {
+      return InteractiveViewer(
+        transformationController: _interactiveViewerController,
+        panEnabled: true,
+        scaleEnabled: true,
+        child: HomeScreen(
+          key: ValueKey('home-$_rebuildFlag'),
+          onWebViewCreated: (controller) {
+            print('onWebViewCreated');
+            setState(() {
+              _webViewController = controller;
+            });
+          },
+        ),
+      );
+    } else if (link == "more") {
+      return InteractiveViewer(
+        transformationController: _interactiveViewerController,
+        panEnabled: true,
+        scaleEnabled: true,
+        child: MoreScreen(
+          key: ValueKey('more-$_rebuildFlag'),
+          onWebViewCreated: (controller) {
+            print('onWebViewCreated');
+            setState(() {
+              _webViewController = controller;
+            });
+          },
+        ),
+      );
+    }
+    return SizedBox();
+  })(),
         )
     );
   }
