@@ -260,6 +260,10 @@ class _AppNavigationState extends State<AppNavigation> {
   InAppWebViewController? _webViewController;
   TransformationController _interactiveViewerController = TransformationController();
 
+  List<Widget?> _tabWidgets = [];
+  List<String?> _tabUrls = [];
+  List<InAppWebViewController?> _webViewControllers = [];
+
   @override
   void dispose() {
     _interactiveViewerController.dispose();
@@ -299,24 +303,81 @@ class _AppNavigationState extends State<AppNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> appLayout = AppStateScope.of(context).appLayout;
-    final String loaded = AppStateScope.of(context).loaded!;
-    final ThemeData theme = Theme.of(context);
+    final tabs = AppStateScope.of(context).appLayout['tabs'] as List<dynamic>;
+    final theme = Theme.of(context);
+
+    // Initialize or extend the lists to match the number of tabs
+    while (_tabWidgets.length < tabs.length) _tabWidgets.add(null);
+    while (_tabUrls.length < tabs.length) _tabUrls.add(null);
+    while (_webViewControllers.length < tabs.length) _webViewControllers.add(null);
+    print(_tabWidgets);
+    print(_tabUrls);
+    print(_webViewControllers);
+
+
+    for (int i = 0; i < tabs.length; i++) {
+      final tab = tabs[i];
+      final link = tab['link'] as String;
+
+      final cachedUrl = _tabUrls[i];
+
+      // Only recreate the widget if the URL changed or widget is null
+      if (_tabWidgets[i] == null || cachedUrl != link) {
+        _tabUrls[i] = link;
+
+        if (link.startsWith('http')) {
+          _tabWidgets[i] = WebView(
+            key: ValueKey('webview-$i-$link'),
+            url: link,
+            onWebViewCreated: (controller) {
+              _webViewControllers[i] = controller;
+              setState(() {}); // update when controller assigned
+            },
+          );
+        } else if (link == "#") {
+          _tabWidgets[i] = InteractiveViewer(
+            transformationController: _interactiveViewerController,
+            panEnabled: true,
+            scaleEnabled: true,
+            child: HomeScreen(
+              key: ValueKey('home-$i-$link'),
+              onWebViewCreated: (controller) {
+                _webViewControllers[i] = controller;
+                setState(() {});
+              },
+            ),
+          );
+        } else if (link.toLowerCase() == "more") {
+          _tabWidgets[i] = InteractiveViewer(
+            transformationController: _interactiveViewerController,
+            panEnabled: true,
+            scaleEnabled: true,
+            child: MoreScreen(
+              key: ValueKey('more-$i-$link'),
+              onWebViewCreated: (controller) {
+                _webViewControllers[i] = controller;
+                setState(() {});
+              },
+            ),
+          );
+        } else {
+          _tabWidgets[i] = SizedBox.shrink();
+        }
+      }
+    }
+
+    // Now use your PopScope and Scaffold, unchanged from your last working version:
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (bool didPop, Object? result) async {
         if (didPop) {
-
           return;
         }
 
         if (webViewControllers.isNotEmpty) {
-          GlobalWebViewController globalWebViewController =
-              webViewControllers.last;
-          InAppWebViewController? controller =
-              globalWebViewController.controller;
-          void Function()? customLastGoBack =
-              globalWebViewController.customLastGoBack;
+          GlobalWebViewController globalWebViewController = webViewControllers.last;
+          InAppWebViewController? controller = globalWebViewController.controller;
+          void Function()? customLastGoBack = globalWebViewController.customLastGoBack;
 
           if (controller != null) {
             try {
@@ -326,12 +387,11 @@ class _AppNavigationState extends State<AppNavigation> {
                 return;
               }
 
-              if (customLastGoBack != null)
-              {
+              if (customLastGoBack != null) {
                 customLastGoBack.call();
                 webViewControllers.removeLast();
                 setState(() {
-                  _webViewController = null;
+                  _webViewControllers[currentPageIndex] = null; // update current controller
                 });
                 return;
               }
@@ -345,143 +405,125 @@ class _AppNavigationState extends State<AppNavigation> {
         await SystemNavigator.pop();
       },
       child: Scaffold(
-      appBar: AppBar(
-        title: Text(appLayout['tabs'][currentPageIndex]['text']! as String),
-        backgroundColor: theme.colorScheme.primary,
-        foregroundColor: theme.colorScheme.onPrimary,
+        appBar: AppBar(
+          title: Text(tabs[currentPageIndex]['text']! as String),
+          backgroundColor: theme.colorScheme.primary,
+          foregroundColor: theme.colorScheme.onPrimary,
+          actions: [
+            IconButton(
+              tooltip: "Zoom Out",
+              icon: Icon(Icons.zoom_out, semanticLabel: "Zoom out"),
+              onPressed: () async {
+                final currentController = _webViewControllers[currentPageIndex];
+                if (currentController != null) {
+                  bool zoomOut = await currentController.zoomOut();
+                  print('ZoomOut $zoomOut');
+                } else {
+                  _zoomOutInteractiveViewer();
+                }
+              },
+            ),
+            IconButton(
+              tooltip: "Reset Zoom",
+              icon: Icon(Icons.zoom_out_map, semanticLabel: "Reset zoom"),
+              onPressed: () async {
+                final currentController = _webViewControllers[currentPageIndex];
+                if (currentController != null) {
+                  while (await currentController!.zoomOut()) {}
+                } else {
+                  _resetZoomInteractiveViewer();
+                }
+              },
+            ),
+            IconButton(
+              tooltip: "Zoom In",
+              icon: Icon(Icons.zoom_in, semanticLabel: "Zoom in"),
+              onPressed: () async {
+                final currentController = _webViewControllers[currentPageIndex];
+                if (currentController != null) {
+                  bool zoomIn = await currentController.zoomIn();
+                  print('ZoomIn $zoomIn');
+                } else {
+                  _zoomInInteractiveViewer();
+                }
+              },
+            ),
+          ],
+        ),
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) async {
+            final tabs = AppStateScope.of(context).appLayout['tabs'] as List<dynamic>;
+            final selectedTabLink = tabs[index]['link'] as String;
+            if (
+              selectedTabLink.toLowerCase() == "#" ||
+              selectedTabLink.toLowerCase() == "more"
+            ) {
+              if (webViewControllers.isNotEmpty) {
+                GlobalWebViewController globalWebViewController = webViewControllers.last;
+                InAppWebViewController? controller = globalWebViewController.controller;
+                void Function()? customLastGoBack = globalWebViewController.customLastGoBack;
 
-        actions:[
-          IconButton(
-            tooltip: "Zoom Out",
-            icon: Icon(
-              Icons.zoom_out,
-              semanticLabel: "Zoom out"
-            ),
-            onPressed: () async {
-              if (_webViewController != null) {
-                bool zoomOut = await _webViewController!.zoomOut();
-                print('ZoomOut ${zoomOut}');
-              } else {
-                _zoomOutInteractiveViewer();
+                if (controller != null) {
+                    if (customLastGoBack != null) {
+                      customLastGoBack.call();
+                      webViewControllers.removeLast();
+                      setState(() {
+                        _webViewControllers[currentPageIndex] = null; // update current controller
+                      });
+                  }
+                }
               }
             }
-          ),
-          IconButton(
-            tooltip: "Reset Zoom",
-            icon: Icon(
-              Icons.zoom_out_map,
-              semanticLabel: "Reset zoom"
-            ),
-            onPressed: () async {
-              if (_webViewController != null) {
-                print('Reset Zoom webview not yet implemented');
-                // WebView does not provide zoom reset directly, so optional to reload or ignore
-              } else {
-                _resetZoomInteractiveViewer();
-              }
-            }
-          ),
-          IconButton(
-            tooltip: "Zoom In",
-            icon: Icon(
-              Icons.zoom_in,
-              semanticLabel: "Zoom in"
-            ),
-            onPressed: () async {
-              if (_webViewController != null) {
-                bool zoomIn = await _webViewController!.zoomIn();
-                print('ZoomIn ${zoomIn}');
-              } else {
-                _zoomInInteractiveViewer();
-              }
-            }
-          ),
-        ]
-      ),
-
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            _webViewController = null;
             if (index == currentPageIndex) {
-              _rebuildFlag++;
+              // User tapped the current tab again
+              final currentController = _webViewControllers[index];
+
+              if (currentController != null) {
+                try {
+                  bool canGoBack = await currentController.canGoBack();
+                  while (canGoBack) {
+                    await currentController.goBack();
+                    canGoBack = await currentController.canGoBack();
+                  }
+                  print("Navigated all the way back in WebView for tab $index");
+                } catch (e) {
+                  print('Error on going back all the way: $e');
+                }
+              } else {
+              }
             } else {
-              currentPageIndex = index;
-              _rebuildFlag = 0;
+              // User tapped a different tab, just switch to it
+              setState(() {
+                currentPageIndex = index;
+              });
             }
-          });
-        },        
-        indicatorColor: HexColor.fromHex(
-          appLayout['tabs'][currentPageIndex]['color']
-        ),
-        selectedIndex: currentPageIndex,
-        destinations: <Widget>[
-          for (var tab in appLayout?['tabs'])
-            NavigationDestination(
-              selectedIcon: AppImage(
-                path: tab['icon']!,
-                width: 24,
-                height: 24,
-              ),
-              icon: AppImage(
-                path: tab['icon']!,
-                width: 24,
-                height: 24,
-              ),
-              label: tab?['text'],
-            ),
-        ],
-      ),
-      body: (() {
-    final String link = appLayout['tabs'][currentPageIndex]['link']!;
-    if (link.startsWith('http')) {
-      return WebView(
-        key: ValueKey('$link-$_rebuildFlag'),
-        url: link,
-        onWebViewCreated: (controller) {
-          print('onWebViewCreated');
-          setState(() {
-            _webViewController = controller;
-          });
         },
-      );
-    } else if (link == "#") {
-      return InteractiveViewer(
-        transformationController: _interactiveViewerController,
-        panEnabled: true,
-        scaleEnabled: true,
-        child: HomeScreen(
-          key: ValueKey('home-$_rebuildFlag'),
-          onWebViewCreated: (controller) {
-            print('onWebViewCreated');
-            setState(() {
-              _webViewController = controller;
-            });
-          },
+        indicatorColor: HexColor.fromHex(tabs[currentPageIndex]['color']),
+          selectedIndex: currentPageIndex,
+          destinations: [
+            for (var tab in tabs)
+              NavigationDestination(
+                selectedIcon: AppImage(
+                  path: tab['icon']!,
+                  width: 24,
+                  height: 24,
+                ),
+                icon: AppImage(
+                  path: tab['icon']!,
+                  width: 24,
+                  height: 24,
+                ),
+                label: tab['text'],
+              ),
+          ],
         ),
-      );
-    } else if (link == "more") {
-      return InteractiveViewer(
-        transformationController: _interactiveViewerController,
-        panEnabled: true,
-        scaleEnabled: true,
-        child: MoreScreen(
-          key: ValueKey('more-$_rebuildFlag'),
-          onWebViewCreated: (controller) {
-            print('onWebViewCreated');
-            setState(() {
-              _webViewController = controller;
-            });
-          },
+        body: IndexedStack(
+          index: currentPageIndex,
+          children: _tabWidgets.cast<Widget>(),
         ),
-      );
-    }
-    return SizedBox();
-  })(),
-        )
+      ),
     );
-  }
-}
+  }}
 
 class SecondSplashScreen extends StatelessWidget {
   @override
