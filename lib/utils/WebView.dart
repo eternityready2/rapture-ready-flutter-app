@@ -200,7 +200,7 @@ class _WebViewState extends State<WebView> with WidgetsBindingObserver {
                   width: squareSize,
                   height: squareSize,
                   child: Image.asset(
-                    'assets/icon/splash.png',
+                    'assets/icon/errorPage.png',
                     fit: BoxFit.cover,
                   ),
                 ),
