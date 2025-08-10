@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter/foundation.dart'; // For Factory
-import 'package:flutter/gestures.dart';  // For VerticalDragGestureRecognizer 
+import 'package:flutter/gestures.dart';  // For VerticalDragGestureRecognizer and Horizntal
 
 import '../global/GlobalControllers.dart';
 import '../global/AppState.dart';
@@ -116,7 +116,8 @@ class _WebViewState extends State<WebView> with WidgetsBindingObserver {
             disableDefaultErrorPage: true,
           ),
           gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
-              Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer()),
+            Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer()),
+            Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),
           },
           onReceivedError: (controller, request, error) {
             if (request.isForMainFrame ?? false) {
