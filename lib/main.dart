@@ -220,7 +220,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'VertiZontal Media',
+      title: 'Rapture Ready',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: HexColor.fromHex(
