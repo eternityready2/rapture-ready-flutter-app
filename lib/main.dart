@@ -154,6 +154,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     CacheService.clearAllCache();
     CacheService.stopBackgroundService();
     _initAsync();
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        _hideSplashAndShowReview();
+      }
+    });
   }
 
   @override
@@ -198,6 +203,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
 
+  void _hideSplashAndShowReview() {
+    setState(() => _showSecondSplashScreen = false);
+
+    _showAppReview();
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     final AppState appState = AppStateScope.of(context);
@@ -206,32 +218,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       return SecondSplashScreen();
     }
 
-    if (_showSecondSplashScreen) {
-      final DateTime splashEndTime = DateTime.now();
-
-      final elapsed = splashEndTime.difference(
-        this.widget.splashStartTime
-      ).inSeconds;
-
-      final int timeToWait = 2;
-
-      if (elapsed >= timeToWait) {
-        setState(() {
-          _showSecondSplashScreen = false;
-        });
-      } else {
-        Future.delayed(Duration(seconds: timeToWait - elapsed), () async {
-          setState(() {
-            _showSecondSplashScreen = false;
-          });
-        });
-      }
-      return SecondSplashScreen();
-    }
-
-    _showAppReview();
-    print(appState.loaded);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'VertiZontal Media',
@@ -239,10 +225,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         colorScheme: ColorScheme.fromSeed(
           seedColor: HexColor.fromHex(
             appState.appLayout['globalTheme']['color']!
-          )
+          ),
         ),
       ),
-      home: AppNavigation()
+      home: Stack(
+        children: [
+          AppNavigation(),
+          if (_showSecondSplashScreen)
+            Positioned.fill(child: SecondSplashScreen()),
+        ]
+      )
     );
   }
 }
