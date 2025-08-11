@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/WebView.dart';
 import '../utils/Color.dart';
@@ -238,9 +239,14 @@ class MatrixGrid extends StatelessWidget {
                   : null;
 
               return GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (cell != null) {
-                    handleLinkClicked(cell['link']);
+                    if (cell['text'].toLowerCase() == 'call us') {
+                      launchUrl(Uri.parse('tel:+14172335389'));
+                    }
+                    else {
+                      handleLinkClicked(cell['link']);
+                    }
                   }
                 },
                 child: Container(
