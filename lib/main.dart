@@ -15,6 +15,8 @@ import 'dart:io';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 
+import 'package:flutter_chrome_cast/flutter_chrome_cast.dart';
+
 // Local Libraries
 import 'utils/WebView.dart';
 import 'utils/AppLayoutCache.dart';
@@ -44,6 +46,7 @@ void main() async {
 
   final DateTime splashStartTime = DateTime.now();
 
+  await initGoogleCast();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -426,6 +429,14 @@ class _AppNavigationState extends State<AppNavigation> {
                   }
                 }
               ),
+            if (Platform.isIOS)
+              IconButton(
+                tooltip: "Screen cast",
+                icon: Icon(Icons.cast, semanticLabel: "Screen cast"),
+                onPressed: () {
+                  _showCastDevicesDialog(context);
+                },
+              ),
             IconButton(
               tooltip: "Zoom Out",
               icon: Icon(Icons.zoom_out, semanticLabel: "Zoom out"),
@@ -568,3 +579,89 @@ class SecondSplashScreen extends StatelessWidget {
   }
 }
 
+
+Future<void> initGoogleCast() async {
+  if (Platform.isAndroid) {
+    return;
+  }
+
+  // Use the default Cast application ID or your custom one
+  const appId = GoogleCastDiscoveryCriteria.kDefaultApplicationId;
+  GoogleCastOptions? options;
+  
+  if (Platform.isIOS) {
+    options = IOSGoogleCastOptions(
+      GoogleCastDiscoveryCriteriaInitialize.initWithApplicationID(appId),
+    );
+  } else if (Platform.isAndroid) {
+    options = GoogleCastOptionsAndroid(
+      appId: appId,
+    );
+  }
+  
+  // Initialize the Google Cast context
+  GoogleCastContext.instance.setSharedInstanceWithOptions(options!);
+}
+
+void _showCastDevicesDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text("Select Cast Device"),
+        content: SizedBox(
+          width: double.maxFinite,
+          height: 300,
+          child: StreamBuilder<List<GoogleCastDevice>>(
+            stream: GoogleCastDiscoveryManager.instance.devicesStream,
+            builder: (context, snapshot) {
+              final devices = snapshot.data ?? [];
+              if (devices.isEmpty) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "No Cast Devices Found",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      "Make sure your devices are on the same network and try again.",
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                );
+              }
+
+              return ListView.builder(
+                itemCount: devices.length,
+                itemBuilder: (context, index) {
+                  final device = devices[index];
+                  return ListTile(
+                    title: Text(device.friendlyName),
+                    subtitle: Text(device.modelName ?? 'Unknown Model'),
+                    onTap: () async {
+                      Navigator.of(context).pop();
+                      try {
+                        await GoogleCastSessionManager.instance.startSessionWithDevice(device);
+                        print("Connected to ${device.friendlyName}");
+                      } catch (e) {
+                        print("Failed to connect: $e");
+                      }
+                    },
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      );
+    },
+  );
+}

@@ -32,6 +32,12 @@
 			<string>http</string>
 			<string>tel</string>
 		</array>
+		<key>NSLocalNetworkUsageDescription</key>
+		<string>${PRODUCT_NAME} uses the local network to discover Cast-enabled devices on your WiFi network.</string>
+		<key>NSBonjourServices</key>
+		<array>
+			<string>_googlecast._tcp</string>
+		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
