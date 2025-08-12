@@ -5,6 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 
 // Local Libraries
 import '../utils/WebView.dart';
@@ -238,27 +240,63 @@ class _MoreScreenState extends State<MoreScreen> {
         onWebViewCreated: this.widget.onWebViewCreated,
       );
     }
-
     return ListView(
       children: <Widget>[
-        for (var section in moreTab['sections'])
-        Card(
-          child: GestureDetector(
-           onTap: () {
-              _handleLinkClicked(section?['link'], section?['android'], section?['ios'], context);
-            },
-            child: ListTile(
-              leading: AppImage(
-                path: section['icon']!,
-                width: 24,
-                height: 24,
-                color: HexColor.fromHex(section['color'] ?? "#0066ff")
+        for (var section in moreTab['sections']) ...[
+          if (Platform.isAndroid && section['text'] != null && section['text'].toString().trim().toLowerCase() == "exit")
+            Card(
+              child: GestureDetector(
+                onTap: () async {
+                  try {
+                    final intent = AndroidIntent(
+                      action: 'android.settings.CAST_SETTINGS',
+                      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+                    );
+                    await intent.launch();
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Device not supported"),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                  }
+                },
+                child: ListTile(
+                  leading: Icon(
+                    Icons.cast,
+                    color: HexColor.fromHex(section['color'] ?? "#0066ff"),
+                  ),
+                  title: Text("Screen Cast"),
+                  trailing: const Icon(Icons.chevron_right),
+                ),
               ),
-              title: Text(section['text']!),
-              trailing: Icon(Icons.chevron_right),
+            ),
+
+          // Main card for the section
+          Card(
+            child: GestureDetector(
+              onTap: () {
+                _handleLinkClicked(
+                  section?['link'],
+                  section?['android'],
+                  section?['ios'],
+                  context,
+                );
+              },
+              child: ListTile(
+                leading: AppImage(
+                  path: section['icon']!,
+                  width: 24,
+                  height: 24,
+                  color: HexColor.fromHex(section['color'] ?? "#0066ff"),
+                ),
+                title: Text(section['text']!),
+                trailing: const Icon(Icons.chevron_right),
+              ),
             ),
           ),
-        ),
+        ],
       ],
     );
   }
