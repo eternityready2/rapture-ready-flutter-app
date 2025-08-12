@@ -12,6 +12,9 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:io';
 
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
+
 // Local Libraries
 import 'utils/WebView.dart';
 import 'utils/AppLayoutCache.dart';
@@ -402,6 +405,27 @@ class _AppNavigationState extends State<AppNavigation> {
           backgroundColor: theme.colorScheme.primary,
           foregroundColor: theme.colorScheme.onPrimary,
           actions: [
+            if (Platform.isAndroid)
+              IconButton(
+                tooltip: "Screen cast",
+                icon: Icon(Icons.cast, semanticLabel: "Screen cast"),
+                onPressed: () async {
+                  try {
+                    final intent = AndroidIntent(
+                      action: 'android.settings.CAST_SETTINGS',
+                      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+                    );
+                    await intent.launch();
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Device not supported"),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                  }
+                }
+              ),
             IconButton(
               tooltip: "Zoom Out",
               icon: Icon(Icons.zoom_out, semanticLabel: "Zoom out"),

@@ -242,38 +242,7 @@ class _MoreScreenState extends State<MoreScreen> {
     }
     return ListView(
       children: <Widget>[
-        for (var section in moreTab['sections']) ...[
-          if (Platform.isAndroid && section['text'] != null && section['text'].toString().trim().toLowerCase() == "exit")
-            Card(
-              child: GestureDetector(
-                onTap: () async {
-                  try {
-                    final intent = AndroidIntent(
-                      action: 'android.settings.CAST_SETTINGS',
-                      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
-                    );
-                    await intent.launch();
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Device not supported"),
-                        duration: Duration(seconds: 3),
-                      ),
-                    );
-                  }
-                },
-                child: ListTile(
-                  leading: Icon(
-                    Icons.cast,
-                    color: HexColor.fromHex(section['color'] ?? "#0066ff"),
-                  ),
-                  title: Text("Screen Cast"),
-                  trailing: const Icon(Icons.chevron_right),
-                ),
-              ),
-            ),
-
-          // Main card for the section
+        for (var section in moreTab['sections'])
           Card(
             child: GestureDetector(
               onTap: () {
@@ -296,7 +265,6 @@ class _MoreScreenState extends State<MoreScreen> {
               ),
             ),
           ),
-        ],
       ],
     );
   }
