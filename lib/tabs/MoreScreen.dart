@@ -13,6 +13,7 @@ import '../utils/WebView.dart';
 import '../utils/AppLayoutCache.dart';
 import '../utils/Color.dart';
 import '../utils/AppImage.dart';
+import '../utils/Donation.dart';
 
 // Services
 import '../services/CacheService.dart';
@@ -79,6 +80,11 @@ class _MoreScreenState extends State<MoreScreen> {
     if (linkUrl == "ACTION_EXIT") {
       await CacheService.runBackgroundService();
       FlutterExitApp.exitApp();
+      return;
+    }
+
+
+    if (await openDonation(linkUrl)) {
       return;
     }
 

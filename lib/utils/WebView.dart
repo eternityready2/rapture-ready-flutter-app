@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter/foundation.dart'; // For Factory
 import 'package:flutter/gestures.dart';  // For VerticalDragGestureRecognizer and Horizntal
-
 import '../global/GlobalControllers.dart';
 import '../global/AppState.dart';
+import '../global/Constants.dart';
 import './Color.dart';
+import './Donation.dart';
+
 
 class WebView extends StatefulWidget {
   /// THe url to load from network.
@@ -115,6 +117,13 @@ class _WebViewState extends State<WebView> with WidgetsBindingObserver {
             useWideViewPort: false,
             disableDefaultErrorPage: true,
           ),
+          shouldOverrideUrlLoading: (controller, navigationAction) async {
+            final url = navigationAction.request.url.toString();
+            if (await openDonation(url)) {
+              return NavigationActionPolicy.CANCEL;
+            }
+            return NavigationActionPolicy.ALLOW;
+          },
           gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
             Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer()),
             Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),

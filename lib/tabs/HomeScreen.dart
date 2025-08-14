@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../utils/WebView.dart';
 import '../utils/Color.dart';
 import '../utils/AppImage.dart';
+import '../utils/Donation.dart';
 
 import '../global/AppState.dart';
 
@@ -24,7 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String? _url;
 
-  void _handleLinkClicked(String linkUrl) {
+  void _handleLinkClicked(String linkUrl) async {
+    if (await openDonation(linkUrl)) {
+      return;
+    }
+
     setState(() {
       _url = linkUrl;
     });
