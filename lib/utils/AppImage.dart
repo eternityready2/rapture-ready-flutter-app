@@ -57,7 +57,9 @@ class _AppImageState extends State<AppImage> {
       }
     }
 
-    final response = await http.get(Uri.parse("${BACKEND_URL}/${path}"));
+    final response = await http.get(Uri.parse(
+        path.startsWith('http') ? path : "${BACKEND_URL}/${path}"
+    ));
     if (response.statusCode == 200) {
       await imageCache.writeImageToCache(path, response.bodyBytes);
       return response.bodyBytes;
