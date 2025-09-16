@@ -44,7 +44,16 @@ class _AppImageState extends State<AppImage> {
 
   Future<Uint8List> _loadImage(String path, String loadType) async {
     final AppImageCache imageCache = AppImageCache();
-    if (loadType == "local") {
+    const pathsNotInAdminPanel = [
+      "/images/home.png",
+      "/images/more.png",
+      "/images/share.png",
+      "/images/grade.png",
+      "/images/info.png",
+      "/images/exit.png",
+    ];
+
+    if (loadType == "local" || pathsNotInAdminPanel.contains(path)) {
       try {
         final bytes = await imageCache.readImageFromCache(path);
         return bytes;
