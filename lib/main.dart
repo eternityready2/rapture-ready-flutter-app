@@ -153,6 +153,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     ];
 
     AppStateWidget.of(context).setAppState(localLayout, "network");
+    print('networkLayout');
+    print(localLayout);
     await AppLayoutCache().writeJsonToCache(localLayout);
   }
 
@@ -226,6 +228,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (appState.loaded == null) {
       return SecondSplashScreen();
     }
+    
+    print(appState.loaded);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

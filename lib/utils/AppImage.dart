@@ -44,16 +44,8 @@ class _AppImageState extends State<AppImage> {
 
   Future<Uint8List> _loadImage(String path, String loadType) async {
     final AppImageCache imageCache = AppImageCache();
-    const pathsNotInAdminPanel = [
-      "/images/home.png",
-      "/images/more.png",
-      "/images/share.png",
-      "/images/grade.png",
-      "/images/info.png",
-      "/images/exit.png",
-    ];
 
-    if (loadType == "assets" || pathsNotInAdminPanel.contains(path)) {
+    if (loadType == "assets" || path.startsWith("/images")) {
       try {
         final bytes = await imageCache.readImageFromCache(path);
         return bytes;
@@ -67,10 +59,10 @@ class _AppImageState extends State<AppImage> {
     }
 
     print("loadtype $loadType $path");
-
     final response = await http.get(Uri.parse(
         path.startsWith('http') ? path : "${BACKEND_URL}/${path}"
     ));
+
     if (response.statusCode == 200) {
       await imageCache.writeImageToCache(path, response.bodyBytes);
       return response.bodyBytes;
