@@ -55,6 +55,9 @@ void main() async {
 
   await CacheService.initialize();
 
+
+  HttpClient.enableTimelineLogging = true;
+
   runApp(AppStateWidget(
     appLayout: {},
     loaded: null,

@@ -33,7 +33,7 @@ class AppImage extends StatefulWidget {
 class _AppImageState extends State<AppImage> {
   late Future<Uint8List> _futureBytes;
   Uint8List? _cachedBytes;
-  String _loadType = "local";
+  String _loadType = "assets";
   String? _failed;
 
   @override
@@ -53,7 +53,7 @@ class _AppImageState extends State<AppImage> {
       "/images/exit.png",
     ];
 
-    if (loadType == "local" || pathsNotInAdminPanel.contains(path)) {
+    if (loadType == "assets" || pathsNotInAdminPanel.contains(path)) {
       try {
         final bytes = await imageCache.readImageFromCache(path);
         return bytes;
@@ -65,6 +65,8 @@ class _AppImageState extends State<AppImage> {
         return data;
       }
     }
+
+    print("loadtype $loadType $path");
 
     final response = await http.get(Uri.parse(
         path.startsWith('http') ? path : "${BACKEND_URL}/${path}"
@@ -96,9 +98,9 @@ class _AppImageState extends State<AppImage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _cachedBytes != null ? _successWidget(_cachedBytes!) : _waitingWidget();
         } else if (snapshot.hasError) {
-          if (_loadType == "local" && _failed == null) {
+          if (_loadType == "assets" && _failed == null) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              _switchToNetworkLoad(null, "local");
+              _switchToNetworkLoad(null, "assets");
             });
             return _waitingWidget();
           } else if (_loadType == "network" && _failed == null) {
@@ -106,7 +108,7 @@ class _AppImageState extends State<AppImage> {
           }
           return _failureWidget();
         } else if (snapshot.hasData) {
-          if (_loadType == "local") {
+          if (_loadType == "assets") {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _switchToNetworkLoad(snapshot.data, null);
             });
