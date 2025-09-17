@@ -119,6 +119,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
 
     firstTab['sections'] = networkLayout['data']['sections'];
+    firstTab['icon'] = networkLayout['data']['bottomNav'][0]['icon'];
 
     localLayout['tabs'] = [
       for (var tab in localLayout['tabs'])
@@ -371,7 +372,6 @@ class _AppNavigationState extends State<AppNavigation> {
       }
     }
 
-    // Now use your PopScope and Scaffold, unchanged from your last working version:
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (bool didPop, Object? result) async {
