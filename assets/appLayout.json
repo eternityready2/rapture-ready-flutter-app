@@ -231,6 +231,13 @@
           "_id": "6869b03c629f7f94da9d90ae"
         },
         {
+          "id": "more-3",
+          "icon": "/images/repture_bible.png",
+          "text": "Read Bible",
+          "link": "https://www.biblegateway.com/",
+          "_id": "6869b03c629f7f94da9d90ae"
+        },
+        {
           "icon": "/images/share.png",
           "text": "Share",
           "color": "#0066ff",
