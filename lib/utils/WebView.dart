@@ -125,9 +125,12 @@ class _WebViewState extends State<WebView> with WidgetsBindingObserver {
             return NavigationActionPolicy.ALLOW;
           },
           gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+            Factory<TapGestureRecognizer>(() => TapGestureRecognizer()),
+            Factory<LongPressGestureRecognizer>(() => LongPressGestureRecognizer()),
             Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer()),
             Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),
-          },
+            Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()), // takes all gestures eagerly
+          }.toSet(),
           onReceivedError: (controller, request, error) {
             if (request.isForMainFrame ?? false) {
               setState(() {
