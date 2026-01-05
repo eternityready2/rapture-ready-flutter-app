@@ -30,7 +30,7 @@ Future<void> showShareModal(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'Share',
+                      'Share Article',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class _SharePlatformButton extends StatelessWidget {
 
 Future<void> _shareWhatsApp(String articleLink) async {
   final message = '''
-Rapture Ready App
+Eternity Ready & Rapture Ready App
 
 Article Link: $articleLink
 
@@ -154,7 +154,7 @@ Android: https://play.google.com/store/apps/details?id=com.wRaptureReadyEndTimes
 
 Future<void> _shareSMS(String articleLink) async {
   final message = '''
-Rapture Ready App
+Eternity Ready and Rapture Ready App
 
 Article Link: $articleLink
 
@@ -172,7 +172,7 @@ Android: https://play.google.com/store/apps/details?id=com.wRaptureReadyEndTimes
 
 Future<void> _shareEmail(String articleLink) async {
   final message = '''
-Rapture Ready App
+Eternity Ready & Rapture Ready App
 
 Article Link: $articleLink
 
@@ -181,7 +181,7 @@ iOS: https://apps.apple.com/us/app/rapture-ready-eternity-ready/id6504677632
 Android: https://play.google.com/store/apps/details?id=com.wRaptureReadyEndTimesNewsProphecyDoctrineofPreTribRapture&hl=en-US
 ''';
   
-  final subject = Uri.encodeComponent('Rapture Ready App');
+  final subject = Uri.encodeComponent('Eternity Ready & Rapture Ready App');
   final body = Uri.encodeComponent(message);
   final uri = Uri.parse('mailto:?subject=$subject&body=$body');
   if (await canLaunchUrl(uri)) {
@@ -191,7 +191,7 @@ Android: https://play.google.com/store/apps/details?id=com.wRaptureReadyEndTimes
 
 Future<void> _shareFacebook(String articleLink) async {
   final message = '''
-Rapture Ready App
+Eternity Ready & Rapture Ready App
 
 Article Link: $articleLink
 

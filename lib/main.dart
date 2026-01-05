@@ -416,9 +416,7 @@ class _AppNavigationState extends State<AppNavigation> {
           backgroundColor: theme.colorScheme.primary,
           foregroundColor: theme.colorScheme.onPrimary,
           actions: [
-            IconButton(
-              tooltip: "Share Article",
-              icon: Icon(Icons.share, semanticLabel: "Share Article"),
+            TextButton.icon(
               onPressed: () async {
                 final controller = _webViewControllers[currentPageIndex];
                 if (controller != null) {
@@ -427,8 +425,12 @@ class _AppNavigationState extends State<AppNavigation> {
                   showShareModal(context, urlToShare: urlString);
                 }
               },
+              icon: const Icon(Icons.share),
+              label: const Text('Share'),
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.onPrimary,
+              ),
             ),
-
             if (Platform.isAndroid)
               IconButton(
                 tooltip: "Screen cast",
@@ -471,6 +473,7 @@ class _AppNavigationState extends State<AppNavigation> {
                 }
               },
             ),
+            /*
             IconButton(
               tooltip: "Reset Zoom",
               icon: Icon(Icons.zoom_out_map, semanticLabel: "Reset zoom"),
@@ -483,6 +486,7 @@ class _AppNavigationState extends State<AppNavigation> {
                 }
               },
             ),
+            */
             IconButton(
               tooltip: "Zoom In",
               icon: Icon(Icons.zoom_in, semanticLabel: "Zoom in"),
