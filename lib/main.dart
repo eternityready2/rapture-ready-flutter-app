@@ -23,6 +23,7 @@ import 'utils/AppLayoutCache.dart';
 import 'utils/Color.dart';
 import 'utils/AppImage.dart';
 import 'utils/LayoutLoaders.dart';
+import 'utils/ShareModal.dart';
 
 // Services
 import 'services/NotificationService.dart';
@@ -415,6 +416,19 @@ class _AppNavigationState extends State<AppNavigation> {
           backgroundColor: theme.colorScheme.primary,
           foregroundColor: theme.colorScheme.onPrimary,
           actions: [
+            IconButton(
+              tooltip: "Share Article",
+              icon: Icon(Icons.share, semanticLabel: "Share Article"),
+              onPressed: () async {
+                final controller = _webViewControllers[currentPageIndex];
+                if (controller != null) {
+                  final uri = await controller.getUrl();
+                  final urlString = uri?.toString() ?? '';
+                  showShareModal(context, urlToShare: urlString);
+                }
+              },
+            ),
+
             if (Platform.isAndroid)
               IconButton(
                 tooltip: "Screen cast",

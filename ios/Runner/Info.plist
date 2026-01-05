@@ -31,6 +31,8 @@
 			<string>https</string>
 			<string>http</string>
 			<string>tel</string>
+			<string>sms</string>
+			<string>mailto</string>
 		</array>
 		<key>NSLocalNetworkUsageDescription</key>
 		<string>${PRODUCT_NAME} uses the local network to discover Cast-enabled devices on your WiFi network.</string>
